@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Report a security vulnerability privately
+    url: https://github.com/limweili/eido-releases/security/advisories/new
+    about: Do not put credentials, private data, or exploit details in a public issue.
