@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<title>Download Eido — Friends Alpha</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='6' fill='%232f6f5e'/%3E%3C/svg%3E">
+<style>
+  :root {
+    --surface-ground: #e8e4dc;
+    --surface-card: #f8f6f1;
+    --surface-field: #e9e5dd;
+    --ink: #232019;
+    --ink-soft: #5f594c;
+    --line: rgba(35, 32, 25, .16);
+    --line-strong: rgba(35, 32, 25, .28);
+    --go: #2f6f5e;
+    --go-ink: #2f6f5e;
+    --on-solid: #f8f6f1;
+    --attention: #e9a820;
+    --attention-ink: #8a6206;
+    --dot: rgba(35, 32, 25, .11);
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    --sans: system-ui, "Segoe UI", Helvetica, Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --surface-ground: #2c2c2c;
+      --surface-card: #3b3b3b;
+      --surface-field: #2f2f2f;
+      --ink: #ece7db;
+      --ink-soft: #b8b0a0;
+      --line: rgba(236, 231, 219, .15);
+      --line-strong: rgba(236, 231, 219, .28);
+      --go: #4d9d84;
+      --go-ink: #7fc4ab;
+      --on-solid: #1e1e1e;
+      --attention: #e9a820;
+      --attention-ink: #e3b458;
+      --dot: rgba(236, 231, 219, .08);
+    }
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--surface-ground);
+    background-image: radial-gradient(circle 1px at 1px 1px, var(--dot) 98%, transparent);
+    background-size: 22px 22px;
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+    padding: 48px 16px 64px;
+  }
+
+  main { max-width: 700px; margin: 0 auto; }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  header { margin-bottom: 40px; }
+  header .wordmark {
+    font-family: var(--mono);
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: .04em;
+    color: var(--ink);
+    display: inline-block;
+    margin-bottom: 6px;
+  }
+  header .wordmark .mark { color: var(--go-ink); }
+  header p.lede { max-width: 56ch; color: var(--ink); margin-top: 12px; }
+
+  section { margin-top: 48px; }
+  h2 {
+    font-family: var(--mono);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  h3 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+  p + p { margin-top: 12px; }
+  .soft { color: var(--ink-soft); }
+  .small { font-size: 14px; }
+
+  .cards { display: flex; gap: 16px; flex-wrap: wrap; }
+  .card {
+    flex: 1 1 260px;
+    background: var(--surface-card);
+    border: 1px solid var(--line-strong);
+    border-radius: 8px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .card h3 { font-size: 18px; margin: 0; }
+  .card .floor { font-size: 14px; color: var(--ink-soft); flex: 1; }
+
+  .btn {
+    display: inline-block;
+    background: var(--go);
+    color: var(--on-solid);
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    text-align: center;
+    border-radius: 6px;
+    padding: 12px 16px;
+  }
+  .btn:hover { filter: brightness(.92); }
+  .btn:active { transform: scale(.97); }
+  .btn[aria-disabled="true"] {
+    background: var(--surface-field);
+    color: var(--ink-soft);
+    pointer-events: none;
+  }
+  .meta {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink-soft);
+    min-height: 1em;
+  }
+
+  .notice {
+    display: none;
+    background: color-mix(in srgb, var(--attention) 18%, var(--surface-card));
+    border: 1px solid var(--line-strong);
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 16px;
+    font-size: 15px;
+    color: var(--ink);
+  }
+  .notice.show { display: block; }
+  .notice strong { color: var(--attention-ink); }
+
+  ol.steps { margin: 12px 0 0; padding: 0; list-style: none; counter-reset: step; }
+  ol.steps li {
+    counter-increment: step;
+    position: relative;
+    padding: 0 0 12px 40px;
+  }
+  ol.steps li::before {
+    content: counter(step);
+    position: absolute;
+    left: 0;
+    top: 2px;
+    width: 24px;
+    height: 24px;
+    border: 1px solid var(--line-strong);
+    border-radius: 50%;
+    background: var(--surface-card);
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  ol.steps li:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    left: 12px;
+    top: 28px;
+    bottom: 2px;
+    width: 1px;
+    background: var(--line);
+  }
+  .platform-block {
+    background: var(--surface-card);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 20px 24px;
+  }
+  .platform-block + .platform-block { margin-top: 16px; }
+  .platform-block .eyebrow { display: block; margin-bottom: 10px; }
+
+  kbd, .ui-word {
+    font-family: var(--mono);
+    font-size: .88em;
+    background: var(--surface-field);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 1px 6px;
+    white-space: nowrap;
+  }
+
+  ul.plain { list-style: none; margin-top: 12px; }
+  ul.plain li { position: relative; padding: 0 0 10px 22px; }
+  ul.plain li::before {
+    content: "";
+    position: absolute;
+    left: 4px;
+    top: 10px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--go);
+  }
+
+  a { color: var(--go-ink); }
+
+  footer {
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    font-size: 14px;
+    color: var(--ink-soft);
+  }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <span class="wordmark">eido<span class="mark">.</span></span>
+    <div class="eyebrow">Friends Alpha</div>
+    <p class="lede">
+      Eido is a thinking canvas — a quiet place to lay ideas out as cards,
+      connect them, and think with AI beside you. This page is unlisted:
+      it was shared with you on purpose. Thanks for trying an early build.
+    </p>
+  </header>
+
+  <section id="download">
+    <h2>Download</h2>
+    <div class="notice" id="unreleased">
+      <strong>Not released yet.</strong> The first alpha hasn't been published.
+      Keep this link — the buttons below start working the moment it ships,
+      no new link needed.
+    </div>
+    <div class="cards">
+      <div class="card">
+        <h3>Mac</h3>
+        <p class="floor">
+          Needs macOS 13 or newer on an Apple&nbsp;Silicon Mac
+          (M1 or later). Intel Macs aren't supported.
+        </p>
+        <a class="btn" id="btn-mac"
+           href="https://github.com/limweili/eido-releases/releases/latest">Download for Mac</a>
+        <div class="meta" id="meta-mac"></div>
+      </div>
+      <div class="card">
+        <h3>Windows</h3>
+        <p class="floor">
+          Needs Windows 11 on a 64-bit (x64) PC.
+        </p>
+        <a class="btn" id="btn-win"
+           href="https://github.com/limweili/eido-releases/releases/latest">Download for Windows</a>
+        <div class="meta" id="meta-win"></div>
+      </div>
+    </div>
+    <p class="soft small" style="margin-top: 12px;">
+      If a button takes you to a list of files instead of downloading,
+      grab the file ending in <span class="ui-word">.dmg</span> (Mac)
+      or <span class="ui-word">.exe</span> (Windows).
+    </p>
+  </section>
+
+  <section id="first-open">
+    <h2>First open — for each downloaded build</h2>
+    <p>
+      Friends Alpha is unsigned on both platforms. Your computer therefore
+      shows a warning the first time you open each downloaded build. The steps
+      below let you choose to run that exact download; a corrected build may
+      ask again after you download it.
+    </p>
+
+    <div class="platform-block" style="margin-top: 16px;">
+      <span class="eyebrow">On a Mac</span>
+      <ol class="steps">
+        <li>Open the downloaded file and drag <strong>Eido</strong> into <strong>Applications</strong>.</li>
+        <li>Double-click Eido. macOS will say it can't verify the app —
+            click <span class="ui-word">Done</span>
+            (not <span class="ui-word">Move to Trash</span>).</li>
+        <li>Open <strong>System Settings</strong>, then <strong>Privacy &amp; Security</strong>.</li>
+        <li>Scroll down to the <strong>Security</strong> section. Next to the
+            message about Eido, click <span class="ui-word">Open Anyway</span>.</li>
+        <li>Confirm — your Mac may ask for your password or fingerprint.
+            Eido opens. A future downloaded build may ask again.</li>
+      </ol>
+    </div>
+
+    <div class="platform-block">
+      <span class="eyebrow">On Windows</span>
+      <ol class="steps">
+        <li>Run the downloaded Eido installer.</li>
+        <li>A blue screen appears: <em>"Windows protected your PC."</em>
+            Click <span class="ui-word">More info</span>.</li>
+        <li>Click <span class="ui-word">Run anyway</span>.</li>
+        <li>Follow the installer. A future downloaded build may show the
+            SmartScreen warning again.</li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="promise">
+    <h2>Your data stays yours</h2>
+    <ul class="plain">
+      <li><strong>Everything you write lives on your computer.</strong>
+          There's no account, no login, and no cloud copy.</li>
+      <li><strong>No telemetry.</strong> Eido doesn't report how you use it —
+          to anyone, ever.</li>
+      <li><strong>You choose when Eido reaches an AI provider.</strong> Those
+          requests go only to the provider you set up yourself. Installer
+          downloads happen in your browser from this page, not in the app.
+          Eido otherwise works fully offline.</li>
+    </ul>
+  </section>
+
+  <section id="updates">
+    <h2>Staying up to date</h2>
+    <p>
+      <strong>On both Mac and Windows,</strong> come back to this page, download
+      the newest installer, and run it yourself. Reinstalling the app keeps your
+      local Profile in place.
+    </p>
+    <p>
+      The existing updater path remains in Eido, but this Alpha publishes no
+      updater manifest/checksum assets. Without those feed inputs the updater
+      remains dormant and cannot discover, download, or launch a new installer.
+      <span class="ui-word">SHA256SUMS.txt</span> is release-integrity evidence,
+      not an updater input.
+    </p>
+    <p>
+      The initial <span class="ui-word">0.1.0-alpha.7</span> release includes
+      both Mac and Windows. A correction may cover only the affected platform
+      under a higher version with an explicit release record. Published
+      installer bytes are never replaced.
+    </p>
+  </section>
+
+  <footer>
+    <p>
+      Questions, bugs, or something feels off? Tell the person who sent you
+      this link — that's the fastest route. Eido · Friends Alpha.
+    </p>
+  </footer>
+</main>
+
+<script>
+  (function () {
+    var API = 'https://api.github.com/repos/limweili/eido-releases/releases/latest';
+    var buttons = {
+      mac: document.getElementById('btn-mac'),
+      win: document.getElementById('btn-win'),
+    };
+    var metas = {
+      mac: document.getElementById('meta-mac'),
+      win: document.getElementById('meta-win'),
+    };
+
+    function markUnreleased() {
+      document.getElementById('unreleased').classList.add('show');
+      Object.keys(buttons).forEach(function (key) {
+        buttons[key].setAttribute('aria-disabled', 'true');
+        buttons[key].removeAttribute('href');
+      });
+    }
+
+    function wire(key, asset, release) {
+      if (!asset) return; /* keep the static latest-release link */
+      buttons[key].href = asset.browser_download_url;
+      var size = asset.size ? Math.round(asset.size / 1048576) + ' MB' : '';
+      var version = release.tag_name || release.name || '';
+      metas[key].textContent = [version, size].filter(Boolean).join(' · ');
+    }
+
+    fetch(API, { headers: { Accept: 'application/vnd.github+json' } })
+      .then(function (res) {
+        if (res.status === 404) { markUnreleased(); return null; }
+        if (!res.ok) return null; /* fall back to static links */
+        return res.json();
+      })
+      .then(function (release) {
+        if (!release) return;
+        var assets = release.assets || [];
+        function ends(suffix) {
+          return assets.find(function (a) {
+            return a.name && a.name.toLowerCase().endsWith(suffix);
+          });
+        }
+        wire('mac', ends('.dmg'), release);
+        wire('win', ends('.exe'), release);
+      })
+      .catch(function () { /* offline or blocked: static links still work */ });
+  })();
+</script>
+</body>
+</html>
