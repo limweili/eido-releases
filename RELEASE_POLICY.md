@@ -1,12 +1,12 @@
 # Release policy
 
-Friends Alpha releases obey these controls:
+Alpha releases obey these controls:
 
 - Every release starts as a draft. The initial `0.1.0-alpha.7` draft contains
   its exact certified macOS arm64 and Windows x64 installers, checksums,
   private-source commit, certification evidence, and release note before
   publication.
-- Friends Alpha installers are unsigned: macOS is ad-hoc signed only and
+- Alpha installers are unsigned: macOS is ad-hoc signed only and
   Windows has no Authenticode signature. The download page documents the
   operating-system first-open steps without presenting unsigned bytes as
   authenticated publisher output.

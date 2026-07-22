@@ -9,5 +9,5 @@ private paths, or an Eido save. Use private vulnerability reporting for a
 security-sensitive report.
 
 This repository is public and downloads are not access-controlled. A link being
-shared beyond the Friends Alpha cohort is expected behavior, not a security
+shared beyond the intended cohort is expected behavior, not a security
 incident.
