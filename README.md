@@ -3,8 +3,8 @@
 This is Eido's **public-but-unadvertised** binary release repository. Public
 means that links may be forwarded or discovered; it is not access control.
 
-The initial `0.1.0-alpha.7` candidate is one exact certified pair: macOS arm64
-and Windows x64. Both installers must be present for that initial publication.
+Every full release is one exact certified pair: macOS arm64 and Windows x64.
+Both installers must be present for that publication.
 A correction may publish only the affected platform under a higher version,
 with an explicit release record naming the platform, source, and hashes. The
 Alpha installers are deliberately unsigned, so the download page explains the
